@@ -32,12 +32,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    
-<style>
-  ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
-  li { margin: 5px; padding: 5px; width: 150px; }
-</style>
-
 </head>
 
 <body>
