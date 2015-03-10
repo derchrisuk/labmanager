@@ -11,6 +11,6 @@ namespace labmanager;
 
 class db extends \SQLite3 {
     public function __construct() {
-        $this->open('labmanager.db');
+        $this->open('../labmanager.db');
     }
 }
