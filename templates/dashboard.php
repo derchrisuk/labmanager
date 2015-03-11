@@ -1,3 +1,12 @@
+<?php
+require('../inc/db.php');
+$db = new \labmanager\db();
+$total_locations = $db->getCount('locations');
+$total_labs = $db->getCount('labs');
+$total_racks = $db->getCount('racks');
+$total_devices = $db->getCount('devices');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -331,36 +340,13 @@
                             <a href="#"><i class="fa fa-users fa-fw"></i> Access<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Users <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="access.php">Add</a>
-                                        </li>
-                                        <li>
-                                            <a href="access.php">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a href="access.php">List</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
+                                    <a href="access.php">Add</a>
                                 </li>
-                            </ul>
-                            <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Groups <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="access.php">Add</a>
-                                        </li>
-                                        <li>
-                                            <a href="access.php">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a href="access.php">List</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
+                                    <a href="access.php">Edit</a>
+                                </li>
+                                <li>
+                                    <a href="access.php">Show</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -394,12 +380,12 @@
                                     <i class="fa fa-building fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">0</div>
+                                    <div class="huge"><?php echo $total_locations; ?></div>
                                     <div>Locations</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="locations.php">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -416,12 +402,12 @@
                                     <i class="fa fa-sitemap fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">0</div>
+                                    <div class="huge"><?php echo $total_labs; ?></div>
                                     <div>Labs</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="labs.php">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -438,12 +424,12 @@
                                     <i class="fa fa-cube fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">0</div>
+                                    <div class="huge"><?php echo $total_racks; ?></div>
                                     <div>Racks</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="racks.php">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -460,12 +446,12 @@
                                     <i class="fa fa-server fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">0</div>
+                                    <div class="huge"><?php echo $total_devices; ?></div>
                                     <div>Devices</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="devices.php">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

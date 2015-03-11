@@ -13,4 +13,12 @@ class db extends \SQLite3 {
     public function __construct() {
         $this->open('../labmanager.db');
     }
+
+    public function getCount($tableID) {
+        $result = $this->query('SELECT COUNT(*) as count FROM ' . $tableID);
+        $row = $result->fetchArray();
+        $count = $row['count'];
+        $result->finalize();
+        return $count;
+    }
 }
