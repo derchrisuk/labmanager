@@ -26,6 +26,8 @@ $total_locations = $db->getCount('locations');
     <!-- Custom CSS -->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -51,7 +53,7 @@ $total_locations = $db->getCount('locations');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="blank.html">
+                <a class="navbar-brand" href="dashboard.php">
                   <img alt="Quantum" src="../img/horizontal-quantum-global-services-391x24.png" class="img-responsive">
                 </a>
             </div>
@@ -401,7 +403,24 @@ $total_locations = $db->getCount('locations');
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
+                                    <div>
+                                        <ul>
+                                            <li id="draggable" class="ui-state-highlight loclist" name="newsys1">Drag me
+                                                down</li>
+                                        </ul>
 
+                                        <ul id="sortable" class="list-unstyled">
+                                            <?php
+                                            $devorder = $db->querySingle('SELECT deviceorder FROM racks WHERE id=2');
+                                            $orderArray = explode(" ", $devorder);
+                                            unset($orderArray[0]);
+                                            foreach ($orderArray as $id) {
+                                                echo '<li class="ui-state-default" name="'. $id . '"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>'. $id . '</li>';
+                                            }
+
+                                            ?>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                                 <div class="col-lg-6">
@@ -424,6 +443,8 @@ $total_locations = $db->getCount('locations');
     <!-- jQuery -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 
+    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -432,6 +453,32 @@ $total_locations = $db->getCount('locations');
 
     <!-- Custom Theme JavaScript -->
     <script src="../js/sb-admin-2.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+            $('#sortable').sortable({
+                update: function() {
+                    var stringDiv = "";
+                    $("#sortable").children().each(function(i) {
+                        var li = $(this);
+                        stringDiv += " " + li.attr("name");
+                    });
+
+                    $.ajax({
+                        type: "POST",
+                        url: "updateOrder.php",
+                        data: {order: stringDiv}
+                    });
+                }
+            });
+            $( "#draggable" ).draggable({
+                connectToSortable: "#sortable",
+                revert: "true"
+            });
+            $( "#sortable" ).disableSelection();
+        });
+    </script>
 
 </body>
 

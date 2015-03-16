@@ -45,9 +45,9 @@ $(document).ready(function(){
 
 <ul id="sortable">
 <?php
-require('inc/db.php');
+require('../inc/db.php');
 $db = new \labmanager\db();
-$devorder = $db->querySingle('SELECT deviceorder FROM racks WHERE id=1');
+$devorder = $db->querySingle('SELECT deviceorder FROM racks WHERE id=2');
 $orderArray = explode(" ", $devorder);
 unset($orderArray[0]);
 foreach ($orderArray as $id) {
