@@ -20,7 +20,8 @@
                         $list = $db->query('SELECT name FROM locations');
                         while ($row = $list->fetchArray()) {
                             echo '<li>
-                                <a href="locations.php?' . $row['name'] . '">' . $row['name'] . '</a>
+                                <a href="locations.php?' . $row['name'] . '"><i class="fa fa-building fa-fw"></i> ' .
+                                    $row['name'] . '</a>
                             </li>';
                         }
                     }
@@ -44,7 +45,8 @@
                         $list = $db->query('SELECT name FROM labs');
                         while ($row = $list->fetchArray()) {
                             echo '<li>
-                                <a href="labs.php?' . $row['name'] . '">' . $row['name'] . '</a>
+                                <a href="labs.php?' . $row['name'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
+                                    $row['name'] . '</a>
                             </li>';
                         }
                     }
@@ -55,22 +57,25 @@
             <li>
                 <a href="#"><i class="fa fa-cube fa-fw"></i> Racks<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li>
-                        <a href="#"><i class="fa fa-cube fa-fw"></i> Lab 1<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="racks.php">Overview</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-cube fa-fw"></i> Lab 2<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="racks.php">Overview</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <?php
+                    $racks = $db->getCount('racks');
+                    if ($racks == 0) {
+                        echo '<li>
+                            <a href="racks.php">Overview</a>
+                        </li>';
+                    } else {
+                        echo '<li>
+                            <a href="racks.php">Overview</a>
+                        </li>';
+                        $list = $db->query('SELECT lab FROM racks GROUP BY lab');
+                        while ($row = $list->fetchArray()) {
+                            echo '<li>
+                                <a href="racks.php?' . $row['lab'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
+                                    $row['lab'] . '</a>
+                            </li>';
+                        }
+                    }
+                    ?>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
@@ -78,20 +83,13 @@
                 <a href="#"><i class="fa fa-server fa-fw"></i> Devices<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#"><i class="fa fa-cube fa-fw"></i> Location 1<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="racks.php">Overview</a>
-                            </li>
-                        </ul>
+                        <a href="devices.php"> Overview</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-cube fa-fw"></i> Location 2<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="racks.php">Overview</a>
-                            </li>
-                        </ul>
+                        <a href="devices.php"><i class="fa fa-server fa-fw"></i> DXi</a>
+                    </li>
+                    <li>
+                        <a href="devices.php"><i class="fa fa-server fa-fw"></i> StorNext</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

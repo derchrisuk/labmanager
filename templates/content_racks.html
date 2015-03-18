@@ -57,6 +57,29 @@
 
                                     ?>
                                 </ul>
+                                <ul>
+                                    <?php
+                                    $show_racks = $_GET;
+                                    foreach($show_racks as $key=>$value) {
+                                        $list = $db->query('SELECT * FROM racks WHERE lab="' . $key . '"');
+                                        while ($row = $list->fetchArray()) {
+                                            echo '<li>
+                                                <i class="fa fa-cube fa-fw"></i> ' . $row['name'] . '
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-building fa-fw"></i> ' . $row['location'] . '
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . '
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-server fa-fw"></i> ' . $row['devices'] . '
+                                            </li>
+                                            <br />';
+                                        }
+                                    }
+                                    ?>
+                                </ul>
                             </div>
                         </div>
                         <!-- /.col-lg-6 (nested) -->
