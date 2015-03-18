@@ -1,5 +1,5 @@
 <?php
-include '../inc/ChromePhp.php';
+include 'inc/ChromePhp.php';
 $debug = 0;
 $order = $_POST['order'];
 $split = "-----";
@@ -15,10 +15,10 @@ if ($debug==1) {
 	fwrite($debugfile, var_dump($orderArray, true));
 	fclose($debugfile);
 }
-require('../inc/db.php');
+require('inc/db.php');
 $db = new \labmanager\db();
-ChromePhp::log('Query string: UPDATE racks set deviceorder="'. $order .'" WHERE id=2;');
-if ($db->query('UPDATE racks set deviceorder="'. $order .'" WHERE id=2;')) {
+ChromePhp::log('Query string: UPDATE racks set deviceorder="'. $order .'" WHERE id=1;');
+if ($db->query('UPDATE racks set deviceorder="'. $order .'" WHERE id=1;')) {
 	ChromePhp::log('ok');
 } else {
 	ChromePhp::log('fail');
