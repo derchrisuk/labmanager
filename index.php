@@ -42,9 +42,13 @@ if (isset($_POST["oldform"])) { //prevent null bind
 
     if ($username != NULL && $password != NULL){
         //include the class and create a connection
-        include (dirname(__FILE__) . "/inc/adLDAP/adLDAP.php");
+        include (dirname(__FILE__) . "/components/adLDAP/src/adLDAP.php");
         try {
-            $adldap = new adLDAP();
+            $adldap = new adLDAP(array(
+                'account_suffix'=>'@quantum.com',
+                'base_dn'=>'DC=quantum,DC=com',
+                'domain_controllers'=>array('quantum.com')
+            ));
         }
         catch (adLDAPException $e) {
             echo $e;
@@ -89,16 +93,16 @@ if (isset($_POST["oldform"])) { //prevent null bind
     <title>Lab Manager - Login</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -166,13 +170,13 @@ if (isset($_POST["oldform"])) { //prevent null bind
     </div>
 
     <!-- jQuery -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="components/metisMenu/dist/metisMenu.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>

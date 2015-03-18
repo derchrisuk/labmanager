@@ -9,7 +9,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
+    "components",
     "test",
     "tests"
   ],
@@ -28,7 +28,8 @@
     "flot.tooltip": "~0.8.4",
     "jquery": "~2.1.3",
     "mocha": "~2.2.1",
-    "raphael": "~2.1.4"
+    "raphael": "~2.1.4",
+    "adLDAP": "adldap/adLDAP#~4.0.4"
   },
   "resolutions": {
     "font-awesome": "~4.3.0",

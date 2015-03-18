@@ -7,30 +7,48 @@
             <li>
                 <a href="#"><i class="fa fa-building fa-fw"></i> Locations<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li>
-                        <a href="locations.php">Add</a>
-                    </li>
-                    <li>
-                        <a href="locations.php">Edit</a>
-                    </li>
-                    <li>
-                        <a href="locations.php">Show</a>
-                    </li>
+                    <?php
+                    $locations = $db->getCount('locations');
+                    if ($locations == 0) {
+                        echo '<li>
+                            <a href="locations.php">Overview</a>
+                        </li>';
+                    } else {
+                        echo '<li>
+                            <a href="locations.php">Overview</a>
+                        </li>';
+                        $list = $db->query('SELECT name FROM locations');
+                        while ($row = $list->fetchArray()) {
+                            echo '<li>
+                                <a href="locations.php?' . $row['name'] . '">' . $row['name'] . '</a>
+                            </li>';
+                        }
+                    }
+                    ?>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
             <li>
                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> Labs<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li>
-                        <a href="labs.php">Add</a>
-                    </li>
-                    <li>
-                        <a href="labs.php">Edit</a>
-                    </li>
-                    <li>
-                        <a href="labs.php">Show</a>
-                    </li>
+                    <?php
+                    $labs = $db->getCount('labs');
+                    if ($labs == 0) {
+                        echo '<li>
+                            <a href="labs.php">Overview</a>
+                        </li>';
+                    } else {
+                        echo '<li>
+                            <a href="labs.php">Overview</a>
+                        </li>';
+                        $list = $db->query('SELECT name FROM labs');
+                        while ($row = $list->fetchArray()) {
+                            echo '<li>
+                                <a href="labs.php?' . $row['name'] . '">' . $row['name'] . '</a>
+                            </li>';
+                        }
+                    }
+                    ?>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
@@ -38,13 +56,20 @@
                 <a href="#"><i class="fa fa-cube fa-fw"></i> Racks<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="racks.php">Add</a>
+                        <a href="#"><i class="fa fa-cube fa-fw"></i> Lab 1<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="racks.php">Overview</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="racks.php">Edit</a>
-                    </li>
-                    <li>
-                        <a href="racks.php">Show</a>
+                        <a href="#"><i class="fa fa-cube fa-fw"></i> Lab 2<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="racks.php">Overview</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -53,30 +78,26 @@
                 <a href="#"><i class="fa fa-server fa-fw"></i> Devices<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="devices.php">Add</a>
+                        <a href="#"><i class="fa fa-cube fa-fw"></i> Location 1<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="racks.php">Overview</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="devices.php">Edit</a>
-                    </li>
-                    <li>
-                        <a href="devices.php">Show</a>
+                        <a href="#"><i class="fa fa-cube fa-fw"></i> Location 2<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="racks.php">Overview</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="#"><i class="fa fa-users fa-fw"></i> Access<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="access.php">Add</a>
-                    </li>
-                    <li>
-                        <a href="access.php">Edit</a>
-                    </li>
-                    <li>
-                        <a href="access.php">Show</a>
-                    </li>
-                </ul>
+                <a href="access.php"><i class="fa fa-users fa-fw"></i> Access</a>
                 <!-- /.nav-second-level -->
             </li>
             <li>
