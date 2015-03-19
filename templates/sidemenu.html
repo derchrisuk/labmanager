@@ -5,7 +5,8 @@
                 <a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-building fa-fw"></i> Locations<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-building fa-fw"></i> Locations <span class="badge alert-info">
+                    <?php echo $db->getCount('locations');?></span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <?php
                     $locations = $db->getCount('locations');
@@ -17,10 +18,10 @@
                         echo '<li>
                             <a href="locations.php">Overview</a>
                         </li>';
-                        $list = $db->query('SELECT name FROM locations');
+                        $list = $db->query('SELECT id, name FROM locations');
                         while ($row = $list->fetchArray()) {
                             echo '<li>
-                                <a href="locations.php?' . $row['name'] . '"><i class="fa fa-building fa-fw"></i> ' .
+                                <a href="locations.php?loc=' . $row['name'] . '"><i class="fa fa-building fa-fw"></i> ' .
                                     $row['name'] . '</a>
                             </li>';
                         }
@@ -30,7 +31,8 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Labs<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Labs <span class="badge alert-info">
+                    <?php echo $db->getCount('labs');?></span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <?php
                     $labs = $db->getCount('labs');
@@ -42,11 +44,11 @@
                         echo '<li>
                             <a href="labs.php">Overview</a>
                         </li>';
-                        $list = $db->query('SELECT name FROM labs');
+                        $list = $db->query('SELECT id, name FROM labs GROUP BY name');
                         while ($row = $list->fetchArray()) {
                             echo '<li>
-                                <a href="labs.php?' . $row['name'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
-                                    $row['name'] . '</a>
+                                <a href="labs.php?lab=' . $row['name'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
+                                    $row['name'] . ' <span class="badge alert-info">' . $db->getCountID('labs', 'name', $row['name']) . '</span></a>
                             </li>';
                         }
                     }
@@ -55,7 +57,8 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="#"><i class="fa fa-cube fa-fw"></i> Racks<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-cube fa-fw"></i> Racks <span class="badge alert-info">
+                    <?php echo $db->getCount('racks');?></span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <?php
                     $racks = $db->getCount('racks');
@@ -67,11 +70,11 @@
                         echo '<li>
                             <a href="racks.php">Overview</a>
                         </li>';
-                        $list = $db->query('SELECT lab FROM racks GROUP BY lab');
+                        $list = $db->query('SELECT id, lab FROM racks GROUP BY lab');
                         while ($row = $list->fetchArray()) {
                             echo '<li>
-                                <a href="racks.php?' . $row['lab'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
-                                    $row['lab'] . '</a>
+                                <a href="racks.php?lab=' . $row['lab'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
+                                    $row['lab'] . ' <span class="badge alert-info">' . $db->getCountID('racks', 'lab', $row['lab']) . '</span></a>
                             </li>';
                         }
                     }
@@ -80,17 +83,34 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="#"><i class="fa fa-server fa-fw"></i> Devices<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-server fa-fw"></i> Devices <span class="badge alert-info">
+                    <?php echo $db->getCount('devices');?></span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li>
-                        <a href="devices.php"> Overview</a>
-                    </li>
-                    <li>
-                        <a href="devices.php"><i class="fa fa-server fa-fw"></i> DXi</a>
-                    </li>
-                    <li>
-                        <a href="devices.php"><i class="fa fa-server fa-fw"></i> StorNext</a>
-                    </li>
+                    <?php
+                    $devices = $db->getCount('devices');
+                    if ($racks == 0) {
+                        echo '
+                            <li>
+                                <a href="devices.php">Overview</a>
+                            </li>
+                        ';
+                    } else {
+                        echo '
+                            <li>
+                                <a href="devices.php">Overview</a>
+                            </li>
+                        ';
+                        $list = $db->query('SELECT id, category FROM devices GROUP BY category');
+                        while ($row = $list->fetchArray()) {
+                            echo '
+                                <li>
+                                    <a href="devices.php?dev=' . $row['category'] . '"><i class="fa fa-server fa-fw"></i> ' .
+                                        $row['category'] . ' <span class="badge alert-info">' . $db->getCountID('devices', 'category', $row['category']) . '</span></a>
+                                </li>
+                            ';
+                        }
+                    }
+                    ?>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>

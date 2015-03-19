@@ -10,12 +10,23 @@ namespace labmanager;
 
 
 class db extends \SQLite3 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->open('labmanager.db');
     }
 
-    public function getCount($tableID) {
+    public function getCount($tableID)
+    {
         $result = $this->query('SELECT COUNT(*) as count FROM ' . $tableID);
+        $row = $result->fetchArray();
+        $count = $row['count'];
+        $result->finalize();
+        return $count;
+    }
+
+    public function getCountID($tableID, $id, $value)
+    {
+        $result = $this->query('SELECT COUNT(*) as count FROM ' . $tableID . ' WHERE ' .$id . '="' . $value . '"');
         $row = $result->fetchArray();
         $count = $row['count'];
         $result->finalize();

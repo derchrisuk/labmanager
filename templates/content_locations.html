@@ -1,4 +1,9 @@
-<!-- Page Content -->
+<?php
+        $location = $_GET;
+        $loc = $_GET['loc'];
+        if(empty($location)) {
+            echo '
+            <!-- Page Content -->
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -8,7 +13,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -16,60 +21,230 @@
                             <i class="fa fa-building fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo $total_locations; ?></div>
+                            <div class="huge">'. $total_locations . '</div>
                             <div>Locations</div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="locations.php">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
                         <div class="clearfix"></div>
                     </div>
                 </a>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-building fa-fw"></i> Locations
+        ';
+        } else {
+        $location = $loc;
+        echo '
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Location - ' . $location . '</h1>
                 </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div>
-                                <ul>
-                                    <li id="draggable" class="ui-state-highlight loclist" name="newsys1">Drag me
-                                        down</li>
-                                </ul>
-
-                                <ul id="sortable" class="list-unstyled">
-                                    <?php
-                                            $devorder = $db->querySingle('SELECT deviceorder FROM racks WHERE id=2');
-                                    $orderArray = explode(" ", $devorder);
-                                    unset($orderArray[0]);
-                                    foreach ($orderArray as $id) {
-                                    echo '<li class="ui-state-default" name="'. $id . '"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>'. $id . '</li>';
-                                    }
-
-                                    ?>
-                                </ul>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-sitemap fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">'. $db->getCountID('labs', 'location', $location) .'</div>
+                                    <div>Labs</div>
+                                </div>
                             </div>
                         </div>
-                        <!-- /.col-lg-6 (nested) -->
-                        <div class="col-lg-6">
+                        <a href="labs.php">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-cube fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">'. $db->getCountID('racks', 'location', $location) .'</div>
+                                    <div>Racks</div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- /.col-lg-6 (nested) -->
+                        <a href="racks.php">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-server fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">'. $db->getCountID('devices', 'location', $location) .'</div>
+                                    <div>Devices</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="devices.php">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                ';
+                }
+                ?>
+            </div>
+            <div class="row">
+
+                <?php
+                        $location = $_GET;
+                        if(empty($location)) {
+                            echo '
+                            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-building fa-fw"></i> Locations
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                ';
+                                $list = $db->query('SELECT id, name FROM locations');
+                                while ($row = $list->fetchArray()) {
+                                echo '
+                                <li>
+                                    <a href="locations.php?loc=' . $row['name'] . '"><i class="fa fa-building fa-fw"></i> '
+                                        .
+                                        $row['name'] . '</a>
+                                </li>
+                                ';
+                                }
+                                echo '
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            ';
+            } else {
+            $location = $loc;
+            echo '
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-sitemap fa-fw"></i> Labs
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                ';
+                                $list = $db->query('SELECT id, name FROM labs WHERE location="' . $location . '"');
+                                while ($row = $list->fetchArray()) {
+                                echo '
+                                <li>
+                                    <a href="labs.php?lab=' . $row['name'] . '&loc=' . $location . '"><i class="fa fa-sitemap fa-fw"></i> ' .
+                                        $row['name'] . '</a>
+                                </li>
+                                ';
+                                }
+                                echo '
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ';
+
+            echo '
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-cube fa-fw"></i> Racks
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                ';
+                                $list = $db->query('SELECT id, name, lab FROM racks WHERE location="' . $location .
+                                '"');
+                                while ($row = $list->fetchArray()) {
+                                echo '
+                                <li>
+                                    <a href="racks.php?rack=' . $row['name'] . '&lab=' . $row['lab'] . '&loc=' . $location . '"><i class="fa fa-cube fa-fw"></i> ' .
+                                        $row['name'] . '</a> - <i class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . '
+                                </li>
+                                ';
+                                }
+                                echo '
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ';
+
+            echo '
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-server fa-fw"></i> Devices
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                ';
+                                $list = $db->query('SELECT id, name, lab, rack FROM devices WHERE location="' .
+                                $location . '"');
+                                while ($row = $list->fetchArray()) {
+                                echo '
+                                <li>
+                                    <a href="devices.php?dev=' . $row['name'] . '&rack=' . $row['rack'] . '&lab=' . $row['lab'] . '&loc=' . $location . '"><i class="fa fa-server fa-fw"></i> ' .
+                                        $row['name'] . '</a> - <i class="fa fa-sitemap fa-fw"></i> ' .
+                                        $row['lab'] . ' - <i class="fa fa-cube fa-fw"></i> ' . $row['rack'] . '
+                                </li>
+                                ';
+                                }
+                                echo '
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ';
+            }
+            ?>
+
+            <!-- /.col-lg-12 -->
         </div>
-        <!-- /.col-lg-12 -->
+        <!-- /.row -->
     </div>
-    <!-- /.row -->
-</div>
-<!-- /#page-wrapper -->
+    <!-- /#page-wrapper -->

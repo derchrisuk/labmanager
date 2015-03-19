@@ -44,7 +44,32 @@
                         </div>
                         <!-- /.col-lg-6 (nested) -->
                         <div class="col-lg-6">
-
+                            <div>
+                                <ul>
+                                    <?php
+                                    $show_labs = $_GET;
+                                    foreach($show_labs as $key=>$value) {
+                                    $list = $db->query('SELECT * FROM labs WHERE name="' . $key . '"');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li>
+                                        <i class="fa fa-server fa-fw"></i> ' . $row['name'] . '
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-building fa-fw"></i> ' . $row['location'] . '
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-server fa-fw"></i> ' . $row['devices'] . '
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-dashboard fa-fw"></i> ' . $row['details'] . '
+                                    </li>
+                                    <br>', PHP_EOL;
+                                    }
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
                         </div>
                         <!-- /.col-lg-6 (nested) -->
                     </div>
