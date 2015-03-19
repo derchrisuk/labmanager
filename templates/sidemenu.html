@@ -11,20 +11,26 @@
                     <?php
                     $locations = $db->getCount('locations');
                     if ($locations == 0) {
-                        echo '<li>
-                            <a href="locations.php">Overview</a>
-                        </li>';
+                    echo '
+                    <li>
+                        <a href="locations.php">Overview</a>
+                    </li>
+                    ';
                     } else {
-                        echo '<li>
-                            <a href="locations.php">Overview</a>
-                        </li>';
-                        $list = $db->query('SELECT id, name FROM locations');
-                        while ($row = $list->fetchArray()) {
-                            echo '<li>
-                                <a href="locations.php?loc=' . $row['name'] . '"><i class="fa fa-building fa-fw"></i> ' .
-                                    $row['name'] . '</a>
-                            </li>';
-                        }
+                    echo '
+                    <li>
+                        <a href="locations.php">Overview</a>
+                    </li>
+                    ';
+                    $list = $db->query('SELECT id, name FROM locations');
+                    while ($row = $list->fetchArray()) {
+                    echo '
+                    <li>
+                        <a href="locations.php?loc=' . $row['name'] . '"><i class="fa fa-building fa-fw"></i> ' .
+                            $row['name'] . '</a>
+                    </li>
+                    ';
+                    }
                     }
                     ?>
                 </ul>
@@ -37,20 +43,26 @@
                     <?php
                     $labs = $db->getCount('labs');
                     if ($labs == 0) {
-                        echo '<li>
-                            <a href="labs.php">Overview</a>
-                        </li>';
+                    echo '
+                    <li>
+                        <a href="labs.php">Overview</a>
+                    </li>
+                    ';
                     } else {
-                        echo '<li>
-                            <a href="labs.php">Overview</a>
-                        </li>';
-                        $list = $db->query('SELECT id, name FROM labs GROUP BY name');
-                        while ($row = $list->fetchArray()) {
-                            echo '<li>
-                                <a href="labs.php?lab=' . $row['name'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
-                                    $row['name'] . ' <span class="badge alert-info">' . $db->getCountID('labs', 'name', $row['name']) . '</span></a>
-                            </li>';
-                        }
+                    echo '
+                    <li>
+                        <a href="labs.php">Overview</a>
+                    </li>
+                    ';
+                    $list = $db->query('SELECT id, name FROM labs GROUP BY name');
+                    while ($row = $list->fetchArray()) {
+                    echo '
+                    <li>
+                        <a href="labs.php?lab=' . $row['name'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
+                            $row['name'] . ' <span class="badge alert-info">' . $db->getCountID('labs', 'name', $row['name']) . '</span></a>
+                    </li>
+                    ';
+                    }
                     }
                     ?>
                 </ul>
@@ -63,20 +75,26 @@
                     <?php
                     $racks = $db->getCount('racks');
                     if ($racks == 0) {
-                        echo '<li>
-                            <a href="racks.php">Overview</a>
-                        </li>';
+                    echo '
+                    <li>
+                        <a href="racks.php">Overview</a>
+                    </li>
+                    ';
                     } else {
-                        echo '<li>
-                            <a href="racks.php">Overview</a>
-                        </li>';
-                        $list = $db->query('SELECT id, lab FROM racks GROUP BY lab');
-                        while ($row = $list->fetchArray()) {
-                            echo '<li>
-                                <a href="racks.php?lab=' . $row['lab'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
-                                    $row['lab'] . ' <span class="badge alert-info">' . $db->getCountID('racks', 'lab', $row['lab']) . '</span></a>
-                            </li>';
-                        }
+                    echo '
+                    <li>
+                        <a href="racks.php">Overview</a>
+                    </li>
+                    ';
+                    $list = $db->query('SELECT id, lab FROM racks GROUP BY lab');
+                    while ($row = $list->fetchArray()) {
+                    echo '
+                    <li>
+                        <a href="racks.php?lab=' . $row['lab'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
+                            $row['lab'] . ' <span class="badge alert-info">' . $db->getCountID('racks', 'lab', $row['lab']) . '</span></a>
+                    </li>
+                    ';
+                    }
                     }
                     ?>
                 </ul>
@@ -89,26 +107,26 @@
                     <?php
                     $devices = $db->getCount('devices');
                     if ($racks == 0) {
-                        echo '
-                            <li>
-                                <a href="devices.php">Overview</a>
-                            </li>
-                        ';
+                    echo '
+                    <li>
+                        <a href="devices.php">Overview</a>
+                    </li>
+                    ';
                     } else {
-                        echo '
-                            <li>
-                                <a href="devices.php">Overview</a>
-                            </li>
-                        ';
-                        $list = $db->query('SELECT id, category FROM devices GROUP BY category');
-                        while ($row = $list->fetchArray()) {
-                            echo '
-                                <li>
-                                    <a href="devices.php?dev=' . $row['category'] . '"><i class="fa fa-server fa-fw"></i> ' .
-                                        $row['category'] . ' <span class="badge alert-info">' . $db->getCountID('devices', 'category', $row['category']) . '</span></a>
-                                </li>
-                            ';
-                        }
+                    echo '
+                    <li>
+                        <a href="devices.php">Overview</a>
+                    </li>
+                    ';
+                    $list = $db->query('SELECT id, category FROM devices GROUP BY category');
+                    while ($row = $list->fetchArray()) {
+                    echo '
+                    <li>
+                        <a href="devices.php?dev=' . $row['category'] . '"><i class="fa fa-server fa-fw"></i> ' .
+                            $row['category'] . ' <span class="badge alert-info">' . $db->getCountID('devices', 'category', $row['category']) . '</span></a>
+                    </li>
+                    ';
+                    }
                     }
                     ?>
                 </ul>

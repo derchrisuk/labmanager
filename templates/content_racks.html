@@ -25,6 +25,7 @@
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
                         <div class="clearfix"></div>
                     </div>
                 </a>
@@ -43,7 +44,8 @@
                             <div>
                                 <ul>
                                     <li id="draggable" class="ui-state-highlight loclist" name="newsys1">Drag me
-                                        down</li>
+                                        down
+                                    </li>
                                 </ul>
 
                                 <ul id="sortable" class="list-unstyled">
@@ -52,7 +54,11 @@
                                     $orderArray = explode(" ", $devorder);
                                     unset($orderArray[0]);
                                     foreach ($orderArray as $id) {
-                                    echo '<li class="ui-state-default" name="'. $id . '"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>'. $id . '</li>';
+                                    echo '
+                                    <li class="ui-state-default" name="'. $id . '"><span
+                                            class="ui-icon ui-icon-arrowthick-2-n-s"></span>'. $id . '
+                                    </li>
+                                    ';
                                     }
 
                                     ?>
@@ -66,21 +72,23 @@
                                     <?php
                                     $show_racks = $_GET;
                                     foreach($show_racks as $key=>$value) {
-                                        $list = $db->query('SELECT * FROM racks WHERE lab="' . $key . '"');
-                                        while ($row = $list->fetchArray()) {
-                                            echo '<li>
-                                                <i class="fa fa-cube fa-fw"></i> ' . $row['name'] . '
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-building fa-fw"></i> ' . $row['location'] . '
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . '
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-server fa-fw"></i> ' . $row['devices'] . '
-                                            </li><br>', PHP_EOL;
-                                        }
+                                    $list = $db->query('SELECT * FROM racks WHERE lab="' . $key . '"');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li>
+                                        <i class="fa fa-cube fa-fw"></i> ' . $row['name'] . '
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-building fa-fw"></i> ' . $row['location'] . '
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . '
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-server fa-fw"></i> ' . $row['devices'] . '
+                                    </li>
+                                    <br>', PHP_EOL;
+                                    }
                                     }
                                     ?>
                                 </ul>

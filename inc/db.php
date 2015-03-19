@@ -8,8 +8,8 @@
 
 namespace labmanager;
 
-
-class db extends \SQLite3 {
+class db extends \SQLite3
+{
     public function __construct()
     {
         $this->open('labmanager.db');
@@ -17,18 +17,18 @@ class db extends \SQLite3 {
 
     public function getCount($tableID)
     {
-        $result = $this->query('SELECT COUNT(*) as count FROM ' . $tableID);
+        $result = $this->query('SELECT COUNT(*) AS count FROM ' . $tableID);
         $row = $result->fetchArray();
-        $count = $row['count'];
+        $count = $row[ 'count' ];
         $result->finalize();
         return $count;
     }
 
     public function getCountID($tableID, $id, $value)
     {
-        $result = $this->query('SELECT COUNT(*) as count FROM ' . $tableID . ' WHERE ' .$id . '="' . $value . '"');
+        $result = $this->query('SELECT COUNT(*) AS count FROM ' . $tableID . ' WHERE ' . $id . '="' . $value . '"');
         $row = $result->fetchArray();
-        $count = $row['count'];
+        $count = $row[ 'count' ];
         $result->finalize();
         return $count;
     }

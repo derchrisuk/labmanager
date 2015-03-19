@@ -142,7 +142,8 @@
                                 while ($row = $list->fetchArray()) {
                                 echo '
                                 <li>
-                                    <a href="locations.php?loc=' . $row['name'] . '"><i class="fa fa-building fa-fw"></i> '
+                                    <a href="locations.php?loc=' . $row['name'] . '"><i
+                                            class="fa fa-building fa-fw"></i> '
                                         .
                                         $row['name'] . '</a>
                                 </li>
@@ -171,7 +172,8 @@
                                 while ($row = $list->fetchArray()) {
                                 echo '
                                 <li>
-                                    <a href="labs.php?lab=' . $row['name'] . '&loc=' . $location . '"><i class="fa fa-sitemap fa-fw"></i> ' .
+                                    <a href="labs.php?lab=' . $row['name'] . '&loc=' . $location . '"><i
+                                            class="fa fa-sitemap fa-fw"></i> ' .
                                         $row['name'] . '</a>
                                 </li>
                                 ';
@@ -199,7 +201,8 @@
                                 while ($row = $list->fetchArray()) {
                                 echo '
                                 <li>
-                                    <a href="racks.php?rack=' . $row['name'] . '&lab=' . $row['lab'] . '&loc=' . $location . '"><i class="fa fa-cube fa-fw"></i> ' .
+                                    <a href="racks.php?rack=' . $row['name'] . '&lab=' . $row['lab'] . '&loc=' . $location . '"><i
+                                            class="fa fa-cube fa-fw"></i> ' .
                                         $row['name'] . '</a> - <i class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . '
                                 </li>
                                 ';
@@ -227,9 +230,10 @@
                                 while ($row = $list->fetchArray()) {
                                 echo '
                                 <li>
-                                    <a href="devices.php?dev=' . $row['name'] . '&rack=' . $row['rack'] . '&lab=' . $row['lab'] . '&loc=' . $location . '"><i class="fa fa-server fa-fw"></i> ' .
+                                    <a href="devices.php?dev=' . $row['name'] . '&rack=' . $row['rack'] . '&lab=' . $row['lab'] . '&loc=' . $location . '"><i
+                                            class="fa fa-server fa-fw"></i> ' .
                                         $row['name'] . '</a> - <i class="fa fa-sitemap fa-fw"></i> ' .
-                                        $row['lab'] . ' - <i class="fa fa-cube fa-fw"></i> ' . $row['rack'] . '
+                                    $row['lab'] . ' - <i class="fa fa-cube fa-fw"></i> ' . $row['rack'] . '
                                 </li>
                                 ';
                                 }
