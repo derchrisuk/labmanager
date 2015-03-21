@@ -1,5 +1,37 @@
+<?php
+if (isset($_GET['lab'])) {
+    $lab = $_GET['lab'];
+}
+if (isset($_GET['loc'])) {
+    $loc = $_GET['loc'];
+}
+if (isset($_GET['id'])) {
+    $rackid = $_GET['id'];
+}
+if (empty($lab)) {
+    echo '
 <!-- Page Content -->
 <div id="page-wrapper">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Racks</h1>
@@ -8,7 +40,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4">
             <div class="panel panel-yellow">
                 <div class="panel-heading">
                     <div class="row">
@@ -16,12 +48,12 @@
                             <i class="fa fa-cube fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo $total_racks; ?></div>
+                            <div class="huge">'. $total_racks . '</div>
                             <div>Racks</div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="racks.php">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -31,76 +63,409 @@
                 </a>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-cube fa-fw"></i> Racks
-                </div>
-                <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div>
-                                <ul>
-                                    <li id="draggable" class="ui-state-highlight loclist" name="newsys1">Drag me
-                                        down
-                                    </li>
-                                </ul>
+                        <div class="col-xs-3">
+                            <i class="fa fa-cube fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">Add Rack</div>
+                            <div>Add a new Rack</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#myModal" data-toggle="modal">
+                    <div class="panel-footer">
+                        <span class="pull-left">Add</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        ';
+        } else {
+        echo '
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Racks - ' . $lab . '</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-building fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">'. $db->getCountGroup('labs', 'name', $lab, 'location') .'</div>
+                                    <div>Locations</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="locations.php">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 
-                                <ul id="sortable" class="list-unstyled">
-                                    <?php
-                                    $devorder = $db->querySingle('SELECT deviceorder FROM racks WHERE id=1');
-                                    $orderArray = explode(" ", $devorder);
-                                    unset($orderArray[0]);
-                                    foreach ($orderArray as $id) {
-                                    echo '
-                                    <li class="ui-state-default" name="'. $id . '"><span
-                                            class="ui-icon ui-icon-arrowthick-2-n-s"></span>'. $id . '
-                                    </li>
-                                    ';
-                                    }
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-cube fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">'. $db->getCountID('racks', 'lab', $lab) .'</div>
+                                    <div>Racks</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="racks.php">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 
-                                    ?>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-server fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">'. $db->getCountID('devices', 'lab', $lab) .'</div>
+                                    <div>Devices</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="devices.php">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                ';
+                }
+                ?>
+            </div>
+            <div class="row">
+
+                <?php
+                if (empty($lab)) {
+                    echo '
+                <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-sitemap fa-fw"></i> Labs
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li><a href="labs.php?action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
+                                            class="fa fa-sitemap fa-fw"></i>)</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Details</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-                        <!-- /.col-lg-6 (nested) -->
-                        <div class="col-lg-6">
-                            <div>
-                                <ul>
-                                    <?php
-                                    $show_racks = $_GET;
-                                    foreach($show_racks as $key=>$value) {
-                                    $list = $db->query('SELECT * FROM racks WHERE lab="' . $key . '"');
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                ';
+                                $list = $db->query('SELECT id, name, location FROM labs');
+                                while ($row = $list->fetchArray()) {
+                                echo '
+                                <li>
+                                    <a
+                                            href="labs.php?lab=' . $row['name'] . '&loc=' . $row['location'] . '&id=' . $row['id'] . '"><i
+                                            class="fa fa-sitemap fa-fw"></i> '
+                                        .
+                                        $row['name'] . '</a>
+                                </li>
+                                ';
+                                }
+                                echo '
+                                </ul>
+                            </div>
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                    ';
+                                    $list = $db->query('SELECT id, name, location FROM labs');
                                     while ($row = $list->fetchArray()) {
                                     echo '
                                     <li>
-                                        <i class="fa fa-cube fa-fw"></i> ' . $row['name'] . '
-                                    </li>
-                                    <li>
                                         <i class="fa fa-building fa-fw"></i> ' . $row['location'] . '
                                     </li>
-                                    <li>
-                                        <i class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . '
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-server fa-fw"></i> ' . $row['devices'] . '
-                                    </li>
-                                    <br>', PHP_EOL;
+                                    ';
                                     }
-                                    }
-                                    ?>
+                                    echo '
                                 </ul>
                             </div>
                         </div>
-                        <!-- /.col-lg-6 (nested) -->
                     </div>
                 </div>
             </div>
+            ';
+            } else {
+            echo '
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-cube fa-fw"></i> Locations
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    ';
+                                    $list = $db->query('SELECT id, name, lab FROM racks WHERE lab="' . $lab .
+                                    '" GROUP BY lab');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li><a
+                                            href="racks.php?lab=' . $row['lab'] . '&loc=' . $location . '&action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
+                                            class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . ')</a>
+                                    </li>
+                                    ';
+                                    }
+                                    echo '
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                    ';
+                                    $list = $db->query('SELECT location FROM labs WHERE name="' . $lab .
+                                    '"');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li>
+                                        <a
+                                                href="labs.php?lab=' . $lab . '&loc=' . $row['location'] . '"><i
+                                                class="fa fa-sitemap fa-fw"></i> ' . $lab . '</a>
+                                    </li>
+                                    ';
+                                    }
+                                    echo '
+                                </ul>
+                            </div>
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                    ';
+                                    $list = $db->query('SELECT location FROM labs WHERE name="' . $lab .
+                                    '"');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li>
+                                        <i class="fa fa-building fa-fw"></i> ' . $row['location'] . '
+                                    </li>
+                                    ';
+                                    }
+                                    echo '
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ';
+
+            echo '
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-cube fa-fw"></i> Racks
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    ';
+                                    $list = $db->query('SELECT name, lab FROM racks WHERE lab="' . $lab .
+                                    '" GROUP BY lab');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li><a
+                                            href="racks.php?lab=' . $row['lab'] . '&loc=' . $location . '&action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
+                                            class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . ')</a>
+                                    </li>
+                                    ';
+                                    }
+                                    echo '
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                ';
+                                $list = $db->query('SELECT name, location FROM racks WHERE lab="' . $lab .
+                                '"');
+                                while ($row = $list->fetchArray()) {
+                                echo '
+                                <li>
+                                    <a
+                                            href="racks.php?rack=' . $row['name'] . '&lab=' . $lab . '&loc=' . $row['location'] . '"><i
+                                            class="fa fa-cube fa-fw"></i> ' . $row['name'] . '</a>
+                                </li>
+                                ';
+                                }
+                                echo '
+                                </ul>
+                            </div>
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                    ';
+                                    $list = $db->query('SELECT location FROM racks WHERE lab="' . $lab .
+                                    '"');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li>
+                                        <i class="fa fa-building fa-fw"></i> ' . $row['location'] . '
+                                    </li>
+                                    ';
+                                    }
+                                    echo '
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ';
+
+            echo '
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-server fa-fw"></i> Devices
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    ';
+                                    $list = $db->query('SELECT rack, location FROM devices WHERE lab="' .
+                                    $lab . '" GROUP BY location');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li><a
+                                            href="devices.php?rack=' . $row['rack'] . '&lab=' . $lab . '&loc=' . $row['location'] . '&action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
+                                            class="fa fa-cube fa-fw"></i> ' . $row['rack'] . ' - <i
+                                            class="fa fa-sitemap fa-fw"></i> ' . $row['location']
+                                        . ')</a>
+                                    </li>
+                                    ';
+                                    }
+                                    echo '
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                ';
+                                $list = $db->query('SELECT name, location, rack FROM devices WHERE lab="' .
+                                $lab . '"');
+                                while ($row = $list->fetchArray()) {
+                                echo '
+                                <li>
+                                    <a
+                                            href="devices.php?dev=' . $row['name'] . '&rack=' . $row['rack'] . '&lab=' . $lab . '&loc=' . $row['location'] . '"><i
+                                            class="fa fa-server fa-fw"></i> ' . $row['name'] . '</a>
+                                </li>
+                                ';
+                                }
+                                echo '
+                                </ul>
+                            </div>
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                    ';
+                                    $list = $db->query('SELECT rack FROM devices WHERE lab="' .
+                                    $lab . '"');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li>
+                                        <i class="fa fa-cube fa-fw"></i> ' . $row['rack'] . '
+                                    </li>
+                                    ';
+                                    }
+                                    echo '
+                                </ul>
+                            </div>
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                    ';
+                                    $list = $db->query('SELECT location FROM devices WHERE lab="' .
+                                    $lab . '"');
+                                    while ($row = $list->fetchArray()) {
+                                    echo '
+                                    <li>
+                                        <i class="fa fa-building fa-fw"></i> ' . $row['location'] . '
+                                    </li>
+                                    ';
+                                    }
+                                    echo '
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ';
+            }
+            ?>
+
+            <!-- /.col-lg-12 -->
         </div>
-        <!-- /.col-lg-12 -->
+        <!-- /.row -->
     </div>
-    <!-- /.row -->
-</div>
-<!-- /#page-wrapper -->
+    <!-- /#page-wrapper -->
