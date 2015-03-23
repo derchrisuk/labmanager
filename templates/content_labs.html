@@ -91,15 +91,16 @@ if (empty($lab) and empty($loc) and empty($labid)) {
         </div>
         ';
         } else {
+        $locid = $db->querySingle('SELECT ');
         echo '
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">';
                     if ($labid) {
-                        echo '<h1 class="page-header">Lab - ' . $lab . ' - ' . $loc . '</h1>';
+                        echo '<h1 class="page-header">Lab - ' . ucwords($lab) . ' - ' . $loc . '</h1>';
                     } else {
-                        echo '<h1 class="page-header">Labs - ' . $lab . '</h1>';
+                        echo '<h1 class="page-header">Labs - ' . ucwords($lab) . '</h1>';
                     }
                     echo '
                 </div>
@@ -116,11 +117,10 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                                 </div>
                                 <div class="col-xs-9 text-right">';
                                     if ($loc) {
-                                        echo '<div class="huge">'. $db->getCountIDAnd('labs', 'name', $lab, 'location',
-                                        $loc) .'</div>';
+                                        echo '<div class="huge">'. $db->getCountIDAnd('labs', 'category', $lab,
+                                            'location', $loc) .'</div>';
                                     } else {
-                                        echo '<div class="huge">'. $db->getCountGroup('labs', 'name', $lab,
-                                        'location') .'</div>';
+                                        echo '<div class="huge">'. $db->getCountGroupRows('labs', 'category', $lab, 'locid') .'</div>';
                                     }
                                     echo '
                                     <div>Locations</div>
@@ -146,10 +146,10 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                                 </div>
                                 <div class="col-xs-9 text-right">';
                                     if ($loc) {
-                                        echo '<div class="huge">'. $db->getCountIDAnd('racks', 'lab', $lab, 'location',
+                                        echo '<div class="huge">'. $db->getCountIDAnd('racks', 'category', $lab, 'location',
                                         $loc) .'</div>';
                                     } else {
-                                        echo '<div class="huge">'. $db->getCountID('racks', 'lab', $lab) .'</div>';
+                                        echo '<div class="huge">'. $db->getCountID('racks', 'category', $lab) .'</div>';
                                     }
                                     echo '
                                     <div>Racks</div>
@@ -175,10 +175,10 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                                 </div>
                                 <div class="col-xs-9 text-right">';
                                     if ($loc) {
-                                        echo '<div class="huge">'. $db->getCountIDAnd('devices', 'lab', $lab,
+                                        echo '<div class="huge">'. $db->getCountIDAnd('devices', 'category', $lab,
                                         'location', $loc) .'</div>';
                                     } else {
-                                        echo '<div class="huge">'. $db->getCountID('devices', 'lab', $lab) .'</div>';
+                                        echo '<div class="huge">'. $db->getCountID('devices', 'category', $lab) .'</div>';
                                     }
                                     echo '
                                     <div>Devices</div>
@@ -216,7 +216,7 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu pull-right" role="menu">
-                                    <li><a href="labs.php?action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
+                                    <li><a href="#myModal" data-toggle="modal">Add <i class="fa fa-plus fa-fw"></i> (<i
                                             class="fa fa-sitemap fa-fw"></i>)</a>
                                     </li>
                                     <li class="divider"></li>
@@ -231,7 +231,7 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                             <div class="col-lg-4">
                                 <ul class="list-unstyled">
                                 ';
-                                $list = $db->query('SELECT id, name, location FROM labs');
+                                $list = $db->query('SELECT id, name, location FROM labs ORDER by locid');
                                 while ($row = $list->fetchArray()) {
                                 echo '
                                 <li>
@@ -249,7 +249,7 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                             <div class="col-lg-4">
                                 <ul class="list-unstyled">
                                     ';
-                                    $list = $db->query('SELECT id, name, location FROM labs');
+                                    $list = $db->query('SELECT id, name, location FROM labs ORDER BY locid');
                                     while ($row = $list->fetchArray()) {
                                     echo '
                                     <li>
@@ -280,20 +280,20 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                                 </button>
                                 <ul class="dropdown-menu pull-right" role="menu">
                                     ';
-                                    $list = $db->query('SELECT id, name, lab FROM racks WHERE lab="' . $lab .
-                                    '" GROUP BY lab');
+                                    $list = $db->query('SELECT id FROM labs WHERE category="' . $lab .
+                                    '" GROUP BY category');
                                     while ($row = $list->fetchArray()) {
                                     echo '<li>';
                                         if ($loc) {
                                             echo '
                                         <a
-                                                href="racks.php?lab=' . $row['lab'] . '&loc=' . $loc . '&action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
+                                                href="labs.php?lab=' . $row['lab'] . '&loc=' . $loc . '&action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
                                                 class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . ')</a>';
                                         } else {
                                             echo '
                                         <a
-                                                href="racks.php?lab=' . $row['lab'] . '&action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
-                                                class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . ')</a>';
+                                                href="labs.php?lab=' . $lab . '&action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
+                                                class="fa fa-sitemap fa-fw"></i> ' . ucwords($lab) . ')</a>';
                                         }
                                     echo '</li>';
                                     }
@@ -307,14 +307,14 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                             <div class="col-lg-4">
                                 <ul class="list-unstyled">
                                     ';
-                                    $list = $db->query('SELECT id, location FROM labs WHERE name="' . $lab .
-                                    '"');
+                                    $list = $db->query('SELECT id, location, name FROM labs WHERE category="' . $lab .
+                                    '" ORDER BY locid');
                                     while ($row = $list->fetchArray()) {
                                     echo '
                                     <li>
                                         <a
                                                 href="labs.php?lab=' . $lab . '&loc=' . $row['location'] . '&id=' . $row['id'] . '"><i
-                                                class="fa fa-sitemap fa-fw"></i> ' . $lab . '</a>
+                                                class="fa fa-sitemap fa-fw"></i> ' . $row['name'] . '</a>
                                     </li>
                                     ';
                                     }
@@ -324,8 +324,8 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                             <div class="col-lg-4">
                                 <ul class="list-unstyled">
                                     ';
-                                    $list = $db->query('SELECT location FROM labs WHERE name="' . $lab .
-                                    '"');
+                                    $list = $db->query('SELECT location FROM labs WHERE category="' . $lab .
+                                    '" ORDER BY locid');
                                     while ($row = $list->fetchArray()) {
                                     echo '
                                     <li>
@@ -356,13 +356,13 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                                 </button>
                                 <ul class="dropdown-menu pull-right" role="menu">
                                     ';
-                                    $list = $db->query('SELECT name, lab FROM racks WHERE lab="' . $lab .
-                                    '" GROUP BY lab');
+                                    $list = $db->query('SELECT location FROM racks WHERE category="' . $lab .
+                                    '" GROUP BY location');
                                     while ($row = $list->fetchArray()) {
                                     echo '
                                     <li><a
-                                            href="racks.php?lab=' . $row['lab'] . '&loc=' . $location . '&action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
-                                            class="fa fa-sitemap fa-fw"></i> ' . $row['lab'] . ')</a>
+                                            href="racks.php?lab=' . $lab . '&loc=' . $row['location'] . '&action=add">Add <i class="fa fa-plus fa-fw"></i> (<i
+                                            class="fa fa-building fa-fw"></i> ' . $row['location'] . ')</a>
                                     </li>
                                     ';
                                     }
@@ -376,8 +376,8 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                             <div class="col-lg-4">
                                 <ul class="list-unstyled">
                                 ';
-                                $list = $db->query('SELECT name, location FROM racks WHERE lab="' . $lab .
-                                '"');
+                                $list = $db->query('SELECT name, location FROM racks WHERE category="' . $lab .
+                                '" ORDER BY locid');
                                 while ($row = $list->fetchArray()) {
                                 echo '
                                 <li>
@@ -393,8 +393,8 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                             <div class="col-lg-4">
                                 <ul class="list-unstyled">
                                     ';
-                                    $list = $db->query('SELECT location FROM racks WHERE lab="' . $lab .
-                                    '"');
+                                    $list = $db->query('SELECT location FROM racks WHERE category="' . $lab .
+                                    '" ORDER BY locid');
                                     while ($row = $list->fetchArray()) {
                                     echo '
                                     <li>
@@ -425,7 +425,7 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                                 </button>
                                 <ul class="dropdown-menu pull-right" role="menu">
                                     ';
-                                    $list = $db->query('SELECT rack, location FROM devices WHERE lab="' .
+                                    $list = $db->query('SELECT rack, location FROM devices WHERE category="' .
                                     $lab . '" GROUP BY location');
                                     while ($row = $list->fetchArray()) {
                                     echo '
@@ -447,8 +447,8 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                             <div class="col-lg-4">
                                 <ul class="list-unstyled">
                                 ';
-                                $list = $db->query('SELECT name, location, rack FROM devices WHERE lab="' .
-                                $lab . '"');
+                                $list = $db->query('SELECT name, location, rack FROM devices WHERE category="' .
+                                $lab . '" ORDER BY locid');
                                 while ($row = $list->fetchArray()) {
                                 echo '
                                 <li>
@@ -464,8 +464,8 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                             <div class="col-lg-4">
                                 <ul class="list-unstyled">
                                     ';
-                                    $list = $db->query('SELECT rack FROM devices WHERE lab="' .
-                                    $lab . '"');
+                                    $list = $db->query('SELECT rack FROM devices WHERE category="' .
+                                    $lab . '" ORDER BY locid');
                                     while ($row = $list->fetchArray()) {
                                     echo '
                                     <li>
@@ -481,10 +481,10 @@ if (empty($lab) and empty($loc) and empty($labid)) {
                                     ';
                                     if ($labid) {
                                         $list = $db->query('SELECT location FROM devices WHERE lab="' .
-                                        $lab . '"');
+                                        $lab . '" ORDER BY locid');
                                     } else {
-                                        $list = $db->query('SELECT location FROM devices WHERE lab="' .
-                                        $lab . '"');
+                                        $list = $db->query('SELECT location FROM devices WHERE category="' .
+                                        $lab . '" ORDER BY locid');
                                     }
                                     while ($row = $list->fetchArray()) {
                                     echo '

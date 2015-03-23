@@ -54,12 +54,12 @@
                         <a href="labs.php">Overview</a>
                     </li>
                     ';
-                    $list = $db->query('SELECT id, name FROM labs GROUP BY name');
+                    $list = $db->query('SELECT category FROM labs GROUP BY category');
                     while ($row = $list->fetchArray()) {
                     echo '
                     <li>
-                        <a href="labs.php?lab=' . $row['name'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
-                            $row['name'] . ' <span class="badge alert-info">' . $db->getCountID('labs', 'name', $row['name']) . '</span></a>
+                        <a href="labs.php?lab=' . $row['category'] . '"><i class="fa fa-sitemap fa-fw"></i> ' .
+                            ucwords($row['category']) . ' <span class="badge alert-info">' . $db->getCountID('labs', 'category', $row['category']) . '</span></a>
                     </li>
                     ';
                     }
@@ -118,12 +118,12 @@
                         <a href="devices.php">Overview</a>
                     </li>
                     ';
-                    $list = $db->query('SELECT id, category FROM devices GROUP BY category');
+                    $list = $db->query('SELECT id, type FROM devices GROUP BY type');
                     while ($row = $list->fetchArray()) {
                     echo '
                     <li>
-                        <a href="devices.php?dev=' . $row['category'] . '"><i class="fa fa-server fa-fw"></i> ' .
-                            $row['category'] . ' <span class="badge alert-info">' . $db->getCountID('devices', 'category', $row['category']) . '</span></a>
+                        <a href="devices.php?dev=' . $row['type'] . '"><i class="fa fa-server fa-fw"></i> ' .
+                            $row['type'] . ' <span class="badge alert-info">' . $db->getCountID('devices', 'type', $row['type']) . '</span></a>
                     </li>
                     ';
                     }

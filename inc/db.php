@@ -51,4 +51,14 @@ class db extends \SQLite3
         $result->finalize();
         return $count;
     }
+
+    public function getCountGroupRows($tableID, $id, $value, $group)
+    {
+        $result = $this->query('SELECT COUNT(*) AS count FROM (SELECT * from ' . $tableID . ' WHERE ' . $id . '="' .
+            $value . '" GROUP BY ' . $group . ') as query');
+        $row = $result->fetchArray();
+        $count = $row['count'];
+        $result->finalize();
+        return $count;
+    }
 }
